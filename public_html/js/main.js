@@ -68,18 +68,37 @@
         // Create HTML for the images.
         var html = '';
         var i = 0, length = data.length, image;
-        for (; i < length; i++) {
-            image = data[i];
+
+        var docs = artData.response.docs;
+        for (var i = 0; i < docs.length; i++) {
+            var descriptiveNonRepeating = docs[i].descriptiveNonRepeating;
+            var image = descriptiveNonRepeating.online_media.media[0].content;
+            var title = descriptiveNonRepeating.title.content;
+
             html += '<li>';
 
             // Image tag (preview in Wookmark are 200px wide, so we calculate the height based on that).
-            html += '<img src="' + image.preview + '" width="200" height="' + Math.round(image.height / image.width * 200) + '">';
+            html += '<img src="' + image + '" width="200" height="200">';
 
             // Image title.
-            html += '<p>' + image.title + '</p>';
+            html += '<p>' + title + '</p>';
 
             html += '</li>';
+
         }
+//
+//        for (; i < length; i++) {
+//            image = data[i];
+//            html += '<li>';
+//
+//            // Image tag (preview in Wookmark are 200px wide, so we calculate the height based on that).
+//            html += '<img src="' + image.preview + '" width="200" height="' + Math.round(image.height / image.width * 200) + '">';
+//
+//            // Image title.
+//            html += '<p>' + image.title + '</p>';
+//
+//            html += '</li>';
+//        }
 
         // Add image HTML to the page.
         $('#tiles').append(html);
@@ -94,6 +113,4 @@
 
     // Load first data from the API.
     loadData();
-    
-    console.log("heya");
 })(jQuery);
